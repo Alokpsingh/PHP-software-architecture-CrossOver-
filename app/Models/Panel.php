@@ -10,6 +10,7 @@ class Panel extends Model
 
     public static $fieldValidations = [
         'serial'    => 'required|unique:panels|size:15',
+        'longitude' => 'required|numeric|between:-180,180',
         'latitude'  => 'required|numeric|between:-90,90'
     ];
 
