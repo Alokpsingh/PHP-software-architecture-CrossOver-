@@ -73,4 +73,42 @@ class OneHourElectricityTest extends TestCase
 
         $response->assertStatus(404);
     }
+
+    /**
+     * Test for storing one hour electricity.
+     *
+     * @return void
+     */
+    public function testStoreSuccess()
+    {
+        $panel = factory(Panel::class)->make();
+        $panel->save();
+
+        $response = $this->json('POST', '/api/one_hour_electricities', [
+            'panel_serial'    => $panel->serial,
+            'kilowatts'       => rand(0, 1000),
+            'hour'            => Carbon::now()->toDateTimeString()
+        ]);
+
+        $response->assertStatus(201);
+    }
+
+    /**
+     * Test for storing one hour electricity.
+     *
+     * @return void
+     */
+    public function testStoreFailure()
+    {
+        $panel = factory(Panel::class)->make();
+        $panel->save();
+
+        $response = $this->json('POST', '/api/one_hour_electricities', [
+            'panel_serial'    => $panel->serial,
+            'kilowatts'       => -1,
+            'hour'            => Carbon::now()->toDateTimeString()
+        ]);
+
+        $response->assertStatus(422);
+    }
 }

@@ -10,7 +10,7 @@ class OneHourElectricity extends Model
 
     public static $fieldValidations = [
         'panel_id'  => 'required',
-        'kilowatts' => 'required',
+        'kilowatts' => 'required|integer|min:0',
         'hour'      => 'required|date_format:Y-m-d H:i:s|unique:one_hour_electricities,hour,NULL,panel_id'
     ];
 }
